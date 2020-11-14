@@ -1,7 +1,7 @@
 
-
-//  AD9850 Variables
-
+// original from https://www.ezdenki.com/sig-gen.php
+// AD9850 Variables
+//
 #define  CLOCK A2            // Pin connections for AD9850 Module.
 #define  LOAD  A3
 #define  DATA  A5            // Note that A6 and A7 are ANALOG ONLY.
@@ -20,9 +20,9 @@ void setup()
   pinMode (LOAD,  OUTPUT); 
   pinMode (RESET, OUTPUT); 
   
-  AD9850_init();           // Initialize the AD9850 module.
-  AD9850_reset();          // Reset the module.
-  SetFrequency(init_f);   // Output the initial frequency.
+  AD9850_init();           
+  AD9850_reset();          
+  SetFrequency(init_f);   
   Serial.begin(115200);
   Serial.print("Frequency initialized to: ");
   Serial.println(init_f); 
@@ -34,13 +34,13 @@ void loop()
   String s;
   float freq;
   
-  if(Serial.available()>0) /* If data available at serial port, enter if loop */
+  if(Serial.available()>0) 
   {
     s = Serial.readString(); 
     freq=s.toFloat();
     SetFrequency(freq);
     Serial.print("Frequency set to: "); 
-    Serial.println(s); /* Print data received */
+    Serial.println(s); 
   }  
   
 }
@@ -78,9 +78,6 @@ void AD9850_reset()
   //    Pulse RESET high for a few uS (use 5 uS here)
   //    Pulse CLOCK high for a few uS (use 5 uS here)
   //    Set DATA to ZERO and pulse LOAD for a few uS (use 5 uS here)
-
-  // The data sheet diagrams show only RESET and CLOCK being used to reset the device,
-  // but I see no output unless I also toggle the LOAD line here.
 
   digitalWrite(CLOCK, LOW);
   digitalWrite(LOAD, LOW);
